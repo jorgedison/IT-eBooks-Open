@@ -20,9 +20,20 @@ class ApiToolkit{
         return $config[ApiToolkit::configIniSectionApi][$param];
     }
 
+    public static function getCurrentProtocol()
+    {
+        $protocol = "http://";
+
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") {
+            $protocol = "https://";
+        }
+        return $protocol;
+    }
 
     public static function getHomeUrl()
     {
+        #$url = ApiToolkit::getCurrentProtocol() . filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_URL) . ApiToolkit::getConfigVariable("uriHomeServices");
+        $url = ApiToolkit::getCurrentProtocol();
         if (ApiToolkit::getConfigVariable("enviroment") == "it-ebooks-api.info/v1/") {
             $url.= 'it-ebooks-api.info/v1/';
         }
